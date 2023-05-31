@@ -3,6 +3,8 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Category)
+admin.site.register(SizeVarient)
+admin.site.register(ColorVarient)
 
 
 class ProductImageAdmin(admin.StackedInline):

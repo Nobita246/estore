@@ -23,6 +23,30 @@ class Category(models.Model):
         return self.category_name
 
 
+class SizeVarient(models.Model):
+    uid = models.UUIDField(
+        primary_key=True, editable=False, default=uuid.uuid4)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    product_value = models.IntegerField(default=0)
+    size_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.size_name
+
+
+class ColorVarient(models.Model):
+    uid = models.UUIDField(
+        primary_key=True, editable=False, default=uuid.uuid4)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    product_value = models.IntegerField(default=0)
+    color_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.color_name
+
+
 class Product(models.Model):
     uid = models.UUIDField(
         primary_key=True, editable=False, default=uuid.uuid4)
@@ -35,6 +59,8 @@ class Product(models.Model):
     product_value = models.IntegerField()
     product_desc = models.TextField()
     product_slug = models.SlugField(unique=True, blank=True, null=True)
+    color_uid = models.ManyToManyField(ColorVarient, blank=True)
+    size_uid = models.ManyToManyField(SizeVarient, blank=True)
 
     def save(self, *args, **kwargs):
         self.product_slug = slugify(self.product_name)
